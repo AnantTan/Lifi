@@ -21,9 +21,7 @@
         <activity
             android:name=".SendTextActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity
-            android:name=".utils.SendTextActivity"/>
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar"
@@ -38,7 +36,7 @@
         <activity android:name=".MainActivity"
         android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".TransmitActivity"
+        <activity android:name="SendCommandActivity"
         android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity

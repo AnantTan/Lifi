@@ -1,5 +1,6 @@
 package com.alpha_tech.lifi;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,7 +26,7 @@ import com.alpha_tech.lifi.utils.FlashLight;
 
 import static java.lang.Thread.sleep;
 
-public class TransmitActivity extends AppCompatActivity implements Transmitter, AdapterView.OnItemSelectedListener {
+public class SendCommandActivity extends AppCompatActivity implements Transmitter, AdapterView.OnItemSelectedListener {
     private ProgressBar progressBar;
     private TextView textView;
     private int progressStatus = 0;
@@ -40,16 +41,14 @@ public class TransmitActivity extends AppCompatActivity implements Transmitter, 
 
 
         // Code for spinner
-        Spinner mySpinner = (Spinner) findViewById(R.id.myspinner);
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(TransmitActivity.this, android.R.layout.simple_list_item_1,
+        Spinner mySpinner = findViewById(R.id.myspinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(SendCommandActivity.this, android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.menu_items));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(myAdapter);
         mySpinner.setOnItemSelectedListener(this);
         //Code for drop down ends, onSelect methods at button
 
-        // TODO: Create an alert if flashlight is not present in device
-        // TODO: Exit the app if no flashlight
         boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         Log.d("Has Flashlight:", Boolean.toString(hasFlash));
         if (!hasFlash) {
@@ -95,7 +94,7 @@ public class TransmitActivity extends AppCompatActivity implements Transmitter, 
         int id = item.getItemId();
         if (id == R.id.id_about) {
             //Intent to another activity
-            Intent intentAbout = new Intent(TransmitActivity.this, AboutActivity.class);
+            Intent intentAbout = new Intent(SendCommandActivity.this, AboutActivity.class);
             startActivity(intentAbout);
             return true;
         }
@@ -103,10 +102,9 @@ public class TransmitActivity extends AppCompatActivity implements Transmitter, 
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void startTransmission(View view) {
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        textView = (TextView) findViewById(R.id.textview);
+        progressBar = findViewById(R.id.progressbar);
+        textView = findViewById(R.id.textview);
 
 
         Log.d("SendButton", "User clicked the button.");
@@ -145,11 +143,12 @@ public class TransmitActivity extends AppCompatActivity implements Transmitter, 
         while (progressStatus < 100) {
             progressStatus += 1;
             handler.post(new Runnable() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void run() {
                     progressBar.setProgress(progressStatus);
                     if (progressStatus < 100) {
-                        textView.setText("Progress: " + progressStatus + "/" + progressBar.getMax());
+                        textView.setText(new StringBuilder().append("Progress: ").append(progressStatus).append("/").append(progressBar.getMax()).toString());
                     } else {
                         textView.setText("Transmission Completed.");
                     }

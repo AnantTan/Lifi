@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void transmitActivityPage(View view) {
-        Intent nextPage = new Intent(MainActivity.this, TransmitActivity.class);
+        Intent nextPage = new Intent(MainActivity.this, SendCommandActivity.class);
         startActivity(nextPage);
     }
 

@@ -2,6 +2,7 @@ package com.alpha_tech.lifi;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -40,22 +41,24 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
         setContentView(R.layout.send_text);
 
         // Code for spinner
-        Spinner mySpinner = (Spinner) findViewById(R.id.text_spinner);
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(SendTextActivity.this, android.R.layout.simple_list_item_1,
+        Spinner mySpinner = findViewById(R.id.text_spinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(SendTextActivity.this, android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.text_items));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(myAdapter);
        mySpinner.setOnItemSelectedListener(this);
         //Code for drop down ends, onSelect methods at button
-//        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-//        Log.d("Has Flashlight:", Boolean.toString(hasFlash));
-//        if (!hasFlash) {
-//            showNoFlashLightAlert();
-//        }
-     }
+
+        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        Log.d("Has Flashlight:", Boolean.toString(hasFlash));
+        if (!hasFlash) {
+            showNoFlashLightAlert();
+        }
+    }
 
     @Override
     public void showNoFlashLightAlert() {
+        System.out.println("no flashhhhh");
         new AlertDialog.Builder(this)
                 .setTitle("No Flashlight!")
                 .setMessage("Flashlight is not available on this device.")
@@ -101,10 +104,9 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void startTransmission(View view) {
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        textView = (TextView) findViewById(R.id.textview);
+        progressBar = findViewById(R.id.progressbar);
+        textView = findViewById(R.id.textview);
 
 
         Log.d("SendButton", "User clicked the button.");
@@ -147,7 +149,7 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
                 public void run() {
                     progressBar.setProgress(progressStatus);
                     if (progressStatus < 100) {
-                        textView.setText("Progress: " + progressStatus + "/" + progressBar.getMax());
+                        textView.setText(new StringBuilder().append("Progress: ").append(progressStatus).append("/").append(progressBar.getMax()).toString());
                     } else {
                         textView.setText("Transmission Completed.");
                     }
@@ -163,28 +165,6 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
 
     @Override
     public void transmitData() {
-//        final int frequency = 1; // bps
-//        final int milliSecond = 1000 / frequency;
-//        FlashLight led = new FlashLight();
-//        System.out.println("bitssssssss " +bitStream);
-//        try {
-//            for (char bit : bitStream.toCharArray()) {
-//                //when bit is 1 turn on LED
-//                //when bit is 0 turn off LED
-//                if (bit == '1') {
-//                    led.turnOn();
-//                    sleep(milliSecond);
-//                } //else {
-//                //led.turnOff();
-//                // }
-//                led.turnOff();
-//                sleep(milliSecond);
-//            }
-//            led.release();
-//        } catch (InterruptedException e) {
-//            String TAG = "Flash";
-//            Log.w(TAG, "InterruptedException");
-//        }
         final int frequency = 1; // bps
         final int milliSecond = 1000 / frequency;
         FlashLight led = new FlashLight();
