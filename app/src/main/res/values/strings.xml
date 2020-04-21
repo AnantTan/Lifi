@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Lifi</string>
+    <string name="about">About</string>
+    <string name="button_receive">Receive Command</string>
+    <string name="button_transmit">Command</string>
+    <string name="button_send">Transfer</string>
+    <string name="button_start">Start</string>
+    <string name="help">How to use</string>
+    <string name="about_app">Wireless communication between smart phones using light.\n\nUses LED flashlight as transmitter and ambient light sensor as receiver.</string>
+    <string name="help_content">- Choose a command and click transfer.\n\n- On receiving side, click receive and it\'ll auto detect when transfer starts and ends.\n\n- Command will be executed after transfer is completed.</string>
+    <string name="contact">Contact</string>
+    <string name="contact_content">Create an issue for feature requests. https://github.com/AnantTan</string>
+    <string name="enter_text">Message</string>
+    <string name="splash_description">Splash Screen</string>
+    <string-array name="menu_items">
+        <item>Play Music</item>
+        <item>Browse Internet</item>
+        <item>Open Camera</item>
+        <item>Call someone</item>
+        <item>Change device settings</item>
+        <item>Send Email</item>
+        <item>Send SMS</item>
+
+    </string-array>
+    <string-array name="text_items">
+        <item>Hi</item>
+        <item>How are you?</item>
+
+     </string-array>
+    <string name="title_activity_send_text">SendTextActivity</string>
+</resources>
