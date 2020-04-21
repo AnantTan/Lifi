@@ -3,7 +3,7 @@
     <string name="about">About</string>
     <string name="button_receive">Receive Command</string>
     <string name="button_transmit">Command</string>
-    <string name="button_send">Transfer</string>
+    <string name="button_send">Execute</string>
     <string name="button_start">Start</string>
     <string name="help">How to use</string>
     <string name="about_app">Wireless communication between smart phones using light.\n\nUses LED flashlight as transmitter and ambient light sensor as receiver.</string>

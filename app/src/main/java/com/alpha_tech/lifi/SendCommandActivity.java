@@ -37,7 +37,7 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transmit);
+        setContentView(R.layout.activity_transmit_command);
 
 
         // Code for spinner
@@ -103,8 +103,8 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
 
     @Override
     public void startTransmission(View view) {
-        progressBar = findViewById(R.id.progressbar);
-        textView = findViewById(R.id.textview);
+        progressBar = findViewById(R.id.command_progressBar);
+        textView = findViewById(R.id.command_textView);
 
 
         Log.d("SendButton", "User clicked the button.");

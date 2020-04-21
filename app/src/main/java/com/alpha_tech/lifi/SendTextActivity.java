@@ -2,7 +2,6 @@ package com.alpha_tech.lifi;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -38,7 +37,7 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.send_text);
+        setContentView(R.layout.activity_send_text);
 
         // Code for spinner
         Spinner mySpinner = findViewById(R.id.text_spinner);
@@ -49,11 +48,11 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
        mySpinner.setOnItemSelectedListener(this);
         //Code for drop down ends, onSelect methods at button
 
-        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        Log.d("Has Flashlight:", Boolean.toString(hasFlash));
-        if (!hasFlash) {
-            showNoFlashLightAlert();
-        }
+//        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+//        Log.d("Has Flashlight:", Boolean.toString(hasFlash));
+//        if (!hasFlash) {
+//            showNoFlashLightAlert();
+//        }
     }
 
     @Override
@@ -105,8 +104,8 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
 
     @Override
     public void startTransmission(View view) {
-        progressBar = findViewById(R.id.progressbar);
-        textView = findViewById(R.id.textview);
+        progressBar = findViewById(R.id.text_progressBar);
+        textView = findViewById(R.id.text_textView);
 
 
         Log.d("SendButton", "User clicked the button.");
@@ -156,7 +155,7 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
                 }
             });
             try {
-                Thread.sleep(5 * bitLength);
+                Thread.sleep(20 * bitLength);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
