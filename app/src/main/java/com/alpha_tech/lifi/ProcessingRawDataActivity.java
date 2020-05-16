@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -17,26 +18,28 @@ import com.alpha_tech.lifi.utils.Code;
 public class ProcessingRawDataActivity extends AppCompatActivity implements Receiver {
 
     public boolean commandReceived = false;
-    private TextView mTextViewLightLabel;
+    private TextView textView;
     private SensorManager mSensorManager;
     private SensorEventListener mEventListenerLight;
     private Code code = new Code();
-    private String payload = "";
 
-    public ProcessingRawDataActivity(String type,String bits,TextView textView)
-    {
-        updateUI(type,bits,textView);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        updateUI(ReceiveCommandActivity.payload,ReceiveCommandActivity.textView);
+        ReceiveCommandActivity.payload = "";//next command should have a clean payload
     }
 
     @Override
-    public void updateUI(final String type, final String payloadBits, final TextView textView) {
+    public void updateUI(final String payloadBits, final TextView textView) {
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Payloaddddd  " + payload);
+                System.out.println("Payloaddddd  " + payloadBits);
 
-                String message = code.decode(payload);
+                String message = code.decode(payloadBits);
 
                 System.out.println("messsgggggg " + message);
 
@@ -44,17 +47,15 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
                     //mTextViewLightLabel.setText("Received command." + "" + message + "" + "" + payloadBits + "");
                     Log.d("Received:", message);
                     commandReceived = true;
-                    switch (type)
+                    if(ReceiveTextActivity.commandType.equals("Text"))
                     {
-                        case "Command":
-                            executeCommand(message);
-                            break;
-                        case "Text":
-                            displayText(message,textView);
-                            break;
+                        displayText(message,textView);
+                        ReceiveTextActivity.commandType = "";
                     }
+                    else
+                        executeCommand(message,textView);
                 } else {
-                    mTextViewLightLabel.setText("Command was not found.");
+                    textView.setText("Command was not found.");
                 }
             }
         });
@@ -62,20 +63,18 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
     }
 
     @Override
-    public void executeCommand(String received) {
+    public void executeCommand(String received,TextView textView) {
 
-        System.out.println("in11");
-        Intent intent = null;
-        System.out.println("caseeeeesss");
+       Intent intent = null;
+        System.out.println("recccc "+received);
         switch (received) {
             case "L":
                 Log.d("Got A.", received);
                 String fileLocation = "file:///" + Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music/Music/Faded.mp3";
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse(fileLocation), "audio/*");
-         break;
+                 break;
 
-            //F
             case "B":
                 String url = "http://www.google.com";
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -99,9 +98,12 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
                 intent.createChooser(intent, "Choose email app");
                 break;
 
+            default:
+                textView.setText("Bits corrupted ! Command not found.");
         }
         if (intent != null) {
             startActivity(intent);
+            finish();
         }
 }
 
@@ -113,7 +115,27 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
 
     @Override
     public void displayText(String received,TextView textView) {
-        System.out.println("on22");
-        textView.setText("Hi");
+       switch (received){
+
+           case "A":
+              textView.setText("Hi");
+              finish();
+               break;
+
+           case "B":
+               textView.setText("How are you ?");
+               finish();
+               break;
+
+           case "C":
+               textView.setText("I am good,thanks");
+               finish();
+               break;
+
+           case "D":
+               textView.setText("Bye,take care");
+               finish();
+               break;
+       }
     }
 }

@@ -25,6 +25,8 @@
     <string-array name="text_items">
         <item>Hi</item>
         <item>How are you?</item>
+        <item>I am good,thanks</item>
+        <item>Bye,take care</item>
 
      </string-array>
     <string name="title_activity_send_text">SendTextActivity</string>

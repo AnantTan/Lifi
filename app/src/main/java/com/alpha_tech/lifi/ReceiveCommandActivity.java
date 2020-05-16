@@ -1,5 +1,6 @@
 package com.alpha_tech.lifi;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,7 +18,7 @@ import java.util.TreeMap;
 
 public class ReceiveCommandActivity extends AppCompatActivity {
 
-    private TextView textView;
+    public static TextView textView;
     private SensorManager mSensorManager;
     private SensorEventListener mEventListenerLight;
     private float currentLightIntensity;
@@ -33,10 +34,11 @@ public class ReceiveCommandActivity extends AppCompatActivity {
     private String rawReading = "";
     private boolean started = false;
     private String lastFiveBits;
-    private String payload = "";
+    public static String payload = "";
     private boolean startBitDetected = false;
     private boolean isTransferring = true;
     private int counter = 0;
+    private boolean lightCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +57,11 @@ public class ReceiveCommandActivity extends AppCompatActivity {
         mEventListenerLight = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
+
+
                 //event is listening do something right away !!!!!!!
 
-
                 if (bgIntensity == -1) {
-                    //startTime= System.currentTimeMillis();
                     //startTime = event.timestamp;
                     startTime = System.currentTimeMillis();
 //                    referenceTime = System.currentTimeMillis();
@@ -68,7 +70,6 @@ public class ReceiveCommandActivity extends AppCompatActivity {
                     bgIntensity = event.values[0];
                     records.put(0L, bgIntensity);
                     Log.d("Background Intensity: ", String.valueOf(bgIntensity));
-//                    rawReading += "0";
                 }
 
                 Log.d("RawReading:", String.valueOf(rawReading));
@@ -76,88 +77,38 @@ public class ReceiveCommandActivity extends AppCompatActivity {
                 if (currentLightIntensity > 1000 && !started) {
                     lastTime = System.currentTimeMillis();
                     started = true;
-//                    mTextViewLightLabel.setText("1");
-//                    rawReading += "1";
-                }
-                //long timestamp = event.timestamp;
-//                if (currentLightIntensity > bgIntensity) {
-//                    System.out.println("Crrrr "+currentLightIntensity);
-//                    System.out.println("bgggg "+bgIntensity);
-//                    bit = "1";
-//                } else {
-//                    System.out.println("Crrrr "+currentLightIntensity);
-//                    System.out.println("bgggg "+bgIntensity);
-//                    bit = "0";
-//                }
-//
+             }
 
-                ///////make code class to all 11111111 and else condition do nothing just reset the counter value and add only q bits
-               // lightOn = 1000;
+                //make code class to all 11111111 and else condition do nothing just reset the counter value and add only q bits
 
                 if (event.values[0] > lightOn) {
+                    lightCheck = true;//first bit has been received
                     bit = "1";
                     payload += bit;
                     textView.setText("Received: "+ payload);
                     System.out.println("bit 1" + event.values[0]);
                     System.out.println("readdddd " + payload);
                     lightOn = 25000;
-                   // lightOff = 0;
                     counter = 0;
                 }
 
                 //if led is off density will go below 200 increase the counter and if it continues update the UI
-                if (event.values[0] < 200)
-                { counter ++;
+                //only execute when the first bit has been received
+                if (event.values[0] < 200 && lightCheck)
+                {
+                    counter ++;
                     lightOn = 1000;
 
                     System.out.println("counterrrr "+counter);
                     if(counter>=10)
                     {
-                        new ProcessingRawDataActivity("Command","11", textView);
+                        Intent intent = new Intent(ReceiveCommandActivity.this,ProcessingRawDataActivity.class);
+                        startActivity(intent);
+                        //new ProcessingRawDataActivity("Command",payload, textView,intent);
                         counter=0;
                     }
             }
-
-                /*long currentTime = System.currentTimeMillis();
-
-                if ((currentTime - lastTime) > 499 && started) {
-                    Log.d("1 second.", "passed.");
-                    lastTime = currentTime;
-                    records.put(currentTime - startTime, currentLightIntensity);
-                    Log.d("Bit:", bit);
-                    mTextViewLightLabel.setText(bit);
-                    rawReading += bit;//raw reading will be updated
-                }
-                //System.out.println("rwwwwwwww " + rawReading);
-                intensityValues.add(currentLightIntensity);
-
-                //String startBits = code.getStartBits();
-                //String stopBits = code.getStopBits();
-
-
-                //dealing with total bits in order to create payload bits
-                if (rawReading.length() >= 3) {
-                    lastFiveBits = rawReading.substring(rawReading.length() - 3);//remove first 3 bits as they are start bits
-                    System.out.println("last five bitssss " + lastFiveBits);
-                    if (!startBitDetected) {
-                        if (lastFiveBits.equals(startBits)) {
-                            System.out.println("Start bit detected.");
-                            String bits = String.valueOf(rawReading);
-                            mTextViewLightLabel.setText("Start bit detected." + bits);//debug the received bits
-                            startBitDetected = true;
-                        }
-                    } else {
-                        if (!lastFiveBits.equals(stopBits)) {
-                            payload += lastFiveBits;
-                            System.out.println("Stop bit detected.");
-                            isTransferring = false;
-//                            mSensorManager.unregisterListener(mEventListenerLight);
-//                            updateUI();
-                            mSensorManager.unregisterListener(mEventListenerLight);
-                            updateUI(payload);
-                        }
-                    }*/
-                    rawReading = "";//refresh the string to take in fresh bits
+             rawReading = "";//refresh the string to take in fresh bits
             }
 
             @Override
@@ -178,7 +129,6 @@ public class ReceiveCommandActivity extends AppCompatActivity {
         Log.d("Read all values:", String.valueOf(records));
         Log.d("Read all data:", rawReading);
         mSensorManager.unregisterListener(mEventListenerLight);
-//        updateUI();
         super.onStop();
     }
 }

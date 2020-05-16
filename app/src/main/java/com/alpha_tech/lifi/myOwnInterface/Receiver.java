@@ -7,8 +7,8 @@ import org.w3c.dom.Text;
 
 public interface Receiver {
 
-    public void updateUI(final String type, final String payloadBits, final TextView textView);
+    public void updateUI(final String payloadBits, final TextView textView);
     public Intent getAppIntent(String packageName);
-    public void executeCommand(String received);
+    public void executeCommand(String received,TextView textView);
     public void displayText(String received, TextView textView);
 }
