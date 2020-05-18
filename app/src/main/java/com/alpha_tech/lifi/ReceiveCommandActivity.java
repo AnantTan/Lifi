@@ -86,8 +86,6 @@ public class ReceiveCommandActivity extends AppCompatActivity {
                     bit = "1";
                     payload += bit;
                     textView.setText("Received: "+ payload);
-                    System.out.println("bit 1" + event.values[0]);
-                    System.out.println("readdddd " + payload);
                     lightOn = 25000;
                     counter = 0;
                 }
@@ -99,12 +97,10 @@ public class ReceiveCommandActivity extends AppCompatActivity {
                     counter ++;
                     lightOn = 1000;
 
-                    System.out.println("counterrrr "+counter);
                     if(counter>=10)
                     {
                         Intent intent = new Intent(ReceiveCommandActivity.this,ProcessingRawDataActivity.class);
                         startActivity(intent);
-                        //new ProcessingRawDataActivity("Command",payload, textView,intent);
                         counter=0;
                     }
             }

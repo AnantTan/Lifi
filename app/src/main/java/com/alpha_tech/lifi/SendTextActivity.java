@@ -2,6 +2,7 @@ package com.alpha_tech.lifi;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -48,22 +49,22 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
        mySpinner.setOnItemSelectedListener(this);
         //Code for drop down ends, onSelect methods at button
 
-//        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-//        Log.d("Has Flashlight:", Boolean.toString(hasFlash));
-//        if (!hasFlash) {
-//            showNoFlashLightAlert();
-//        }
+        //if there is no flashlight in the phone
+        boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        Log.d("Has Flashlight:", Boolean.toString(hasFlash));
+        if (!hasFlash) {
+            showNoFlashLightAlert();
+        }
     }
 
     @Override
     public void showNoFlashLightAlert() {
-        System.out.println("no flashhhhh");
         new AlertDialog.Builder(this)
                 .setTitle("No Flashlight!")
                 .setMessage("Flashlight is not available on this device.")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        finish(); // close the Android app
+                    finish(); // close the Android app
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -109,12 +110,8 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
 
 
         Log.d("SendButton", "User clicked the button.");
-//        EditText edit = (EditText) findViewById(R.id.user_message);
-//        userMessage = edit.getText().toString().toUpperCase();
-//        userMessage = "a";
         Code code = new Code();
         bitStream = code.getBitStream(userMessage);
-        System.out.println("bit streamsss "+bitStream);
 
         Log.d("User entered:", userMessage);
         if (userMessage.isEmpty()) {
@@ -167,7 +164,6 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
         final int frequency = 1; // bps
         final int milliSecond = 1000 / frequency;
         FlashLight led = new FlashLight();
-        System.out.println("bitssssssss " +bitStream);
         try {
             for (char bit : bitStream.toCharArray()) {
                 //when bit is 1 turn on LED
@@ -175,9 +171,7 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
                 if (bit == '1') {
                     led.turnOn();
                     sleep(milliSecond);
-                } //else {
-                //led.turnOff();
-                // }
+                }
                 led.turnOff();
                 sleep(milliSecond);
             }
@@ -191,10 +185,9 @@ public class SendTextActivity extends AppCompatActivity implements Transmitter, 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String[] codes = {"A", "B", "C", "D", "E", "F", "G"};
+        String[] codes = {"A", "B", "C", "D"};
         Log.d("nice", String.valueOf(position));
         userMessage = codes[position];
-        System.out.println("user message  "+userMessage);
     }
 
     @Override

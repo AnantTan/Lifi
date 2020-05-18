@@ -97,12 +97,9 @@ public class ReceiveTextActivity extends AppCompatActivity {
                     if(counter>=10)
                     {
                         commandType = "Text";//in the receiving class check the type
-                        //Intent intent = new Intent(ReceiveTextActivity.this,ProcessingRawDataActivity.class);
-                        //startActivity(intent);
                         ProcessingRawDataActivity activity = new ProcessingRawDataActivity();
                         activity.updateUI(payload,textView);
                         payload = "";
-                       // commandType = "";
                         counter=0;
                     }
                 }
@@ -127,7 +124,6 @@ public class ReceiveTextActivity extends AppCompatActivity {
         Log.d("Read all values:", String.valueOf(records));
         Log.d("Read all data:", rawReading);
         mSensorManager.unregisterListener(mEventListenerLight);
-//        updateUI();
         super.onStop();
     }
 }

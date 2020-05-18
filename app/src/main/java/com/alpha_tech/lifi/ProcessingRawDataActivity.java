@@ -5,7 +5,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.TextView;
@@ -37,11 +36,8 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Payloaddddd  " + payloadBits);
 
-                String message = code.decode(payloadBits);
-
-                System.out.println("messsgggggg " + message);
+                String message = code.decode(payloadBits);//decode the payload the bits
 
                 if (message != null && !commandReceived) {
                     //mTextViewLightLabel.setText("Received command." + "" + message + "" + "" + payloadBits + "");
@@ -66,40 +62,42 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
     public void executeCommand(String received,TextView textView) {
 
        Intent intent = null;
-        System.out.println("recccc "+received);
-        switch (received) {
-            case "L":
+       switch (received) {
+            case "A":
                 Log.d("Got A.", received);
-                String fileLocation = "file:///" + Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music/Music/Faded.mp3";
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse(fileLocation), "audio/*");
-                 break;
+                String video_path = "http://www.youtube.com/watch?v=opZ69P-0Jbc";
+                Uri uri = Uri.parse(video_path);
+                // With this line the Youtube application, if installed, will launch immediately.
+                // Without it you will be prompted with a list of the application to choose.
+                uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));
+
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                break;
 
             case "B":
+                Log.d("Got B.", received);
                 String url = "http://www.google.com";
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 break;
 
             case "C":
+                Log.d("Got C.", received);
                 intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                this.finish();//kill the new window that open of the current activity
                 break;
 
             case "D":
+                Log.d("Got D.", received);
                 intent = new Intent(Intent.ACTION_DIAL);
                 break;
 
             case "E":
+                Log.d("Got E.", received);
                 intent = getAppIntent("com.android.settings");
                 break;
 
-
-            case "M":
-                intent = new Intent(Intent.ACTION_SEND);
-                intent.createChooser(intent, "Choose email app");
-                break;
-
-            default:
-                textView.setText("Bits corrupted ! Command not found.");
+           default:
+               textView.setText("Bits corrupted! Command not found");
         }
         if (intent != null) {
             startActivity(intent);

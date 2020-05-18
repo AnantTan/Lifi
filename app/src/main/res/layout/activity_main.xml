@@ -13,14 +13,13 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/receive_command"
             android:layout_centerVertical="true"
-            android:layout_marginTop="200dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginLeft="132dp"
+            android:layout_marginTop="32dp"
             android:onClick="transmitActivityPage"
             android:text="@string/button_transmit"
-            app:layout_constraintBottom_toTopOf="@+id/receive_command"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="@+id/send_command_guideline"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"
             tools:layout_constraintTop_creator="1" />
@@ -30,14 +29,13 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/send_text"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginLeft="132dp"
+            android:layout_marginTop="32dp"
             android:onClick="receiveActivityPage"
             android:text="@string/button_receive"
-            app:layout_constraintBottom_toTopOf="@+id/send_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/transmit_command"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="@+id/receive_command_guideline"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 
@@ -45,27 +43,75 @@
             android:id="@+id/send_text"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginLeft="132dp"
+            android:layout_marginTop="32dp"
             android:onClick="sendTextPage"
             android:text="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.499"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/receive_command" />
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="@+id/send_text_guideline" />
 
         <Button
             android:id="@+id/receive_text"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginLeft="132dp"
+            android:layout_marginTop="32dp"
             android:onClick="receiveTextPage"
             android:text="Receive Text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/send_text"
-            app:layout_constraintVertical_bias="0.006"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="@+id/receive_text_guideline"
             tools:text="Receive Text" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/send_command_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/receive_command_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.35" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/send_text_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.50" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/receive_text_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/screen_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="1.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

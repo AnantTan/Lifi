@@ -30,6 +30,7 @@ public class Code {
         encodingMap.put('D', "1111");//100
         encodingMap.put('E', "11111");//101
         encodingMap.put('F', "111111");//110
+        //implement it when scaling up the app
        /// encodingMap.put('G', "111");
        // encodingMap.put('H', "111");
 //        encodingMap.put('I', "1000");
@@ -72,6 +73,7 @@ public class Code {
         return payloadStream;
     }
 
+    //get the payload and decode it bit by bit
     public String decode(String bitStream) {
         String text = "";
         List<String> strings = new ArrayList<String>();
@@ -88,8 +90,6 @@ public class Code {
     }
 
     public String getBitStream(String message) {
-//        return startBits + encode(message) + stopBits;
-        System.out.println("yesss " + message);
-        return encode(message);
+          return encode(message);
     }
 }

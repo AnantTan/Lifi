@@ -13,13 +13,11 @@
     <string name="enter_text">Message</string>
     <string name="splash_description">Splash Screen</string>
     <string-array name="menu_items">
-        <item>Play Music</item>
+        <item>Open YouTube</item>
         <item>Browse Internet</item>
         <item>Open Camera</item>
         <item>Call someone</item>
         <item>Change device settings</item>
-        <item>Send Email</item>
-        <item>Send SMS</item>
 
     </string-array>
     <string-array name="text_items">

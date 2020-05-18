@@ -108,9 +108,6 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
 
 
         Log.d("SendButton", "User clicked the button.");
-//        EditText edit = (EditText) findViewById(R.id.user_message);
-//        userMessage = edit.getText().toString().toUpperCase();
-//        userMessage = "a";
         Code code = new Code();
         bitStream = code.getBitStream(userMessage);
         System.out.println("bit streamsss "+bitStream);
@@ -155,7 +152,7 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
                 }
             });
             try {
-                Thread.sleep(5 * bitLength);
+                Thread.sleep(20 * bitLength);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -167,7 +164,6 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
         final int frequency = 1; // bps
         final int milliSecond = 1000 / frequency;
         FlashLight led = new FlashLight();
-        System.out.println("bitssssssss " +bitStream);
         try {
             for (char bit : bitStream.toCharArray()) {
                 //when bit is 1 turn on LED
@@ -175,7 +171,8 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
                 if (bit == '1') {
                     led.turnOn();
                     sleep(milliSecond);
-                } led.turnOff();
+                }
+                led.turnOff();
                 sleep(milliSecond);
             }
             led.release();
@@ -187,17 +184,13 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String[] codes = {"A", "B", "C", "D", "E", "F", "G"};
+        String[] codes = {"A", "B", "C", "D", "E"};
         Log.d("nice", String.valueOf(position));
         userMessage = codes[position];
-        System.out.println("user message  "+userMessage);
   }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         userMessage = "";
-
-    }
-
-
+     }
 }

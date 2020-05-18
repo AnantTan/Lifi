@@ -5,8 +5,8 @@ import android.view.View;
 public interface Transmitter {
 
     void showNoFlashLightAlert();
-    void showEmptyMessageAlert();
     void startTransmission(View view);
+    void showEmptyMessageAlert();
     void showProgress();
     void transmitData();
 }
