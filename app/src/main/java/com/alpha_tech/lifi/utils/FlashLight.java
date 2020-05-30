@@ -25,10 +25,10 @@ public class FlashLight {
         }
 
         SurfaceTexture st;
-        st = new SurfaceTexture(0);
+        st = new SurfaceTexture(0);//new SurfaceTexture to stream images to a given OpenGL texture
 
         try {
-            camera.setPreviewTexture(st);
+            camera.setPreviewTexture(st);//start of the preview will be 0
         } catch (IOException e) {
             e.printStackTrace();
         }
