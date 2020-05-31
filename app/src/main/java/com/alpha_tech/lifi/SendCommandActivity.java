@@ -1,5 +1,6 @@
 package com.alpha_tech.lifi;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -106,6 +107,21 @@ public class SendCommandActivity extends AppCompatActivity implements Transmitte
         progressBar = findViewById(R.id.command_progressBar);
         textView = findViewById(R.id.command_textView);
 
+        //check if the permission is granted for the flashlight or not
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission")
+                    .setMessage("Please allow access to camera for the flashlight")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish(); // close the Android app
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
 
         Log.d("SendButton", "User clicked the button.");
         Code code = new Code();

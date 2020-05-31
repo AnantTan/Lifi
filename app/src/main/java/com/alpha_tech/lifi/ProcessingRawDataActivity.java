@@ -65,12 +65,11 @@ public class ProcessingRawDataActivity extends AppCompatActivity implements Rece
        switch (received) {
             case "A":
                 Log.d("Got A.", received);
-                String video_path = "http://www.youtube.com/watch?v=opZ69P-0Jbc";
+                String video_path = "https://www.youtube.com/watch?v=Zrnf4sEdoS8";
                 Uri uri = Uri.parse(video_path);
                 // With this line the Youtube application, if installed, will launch immediately.
                 // Without it you will be prompted with a list of the application to choose.
                 uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));
-
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 break;
 
